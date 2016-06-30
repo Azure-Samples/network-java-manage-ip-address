@@ -34,6 +34,8 @@ Set the environment variable `AZURE_AUTH_LOCATION` with the full path for an aut
 
 [Public IP Address - Overview](https://azure.microsoft.com/en-us/documentation/articles/virtual-network-ip-addresses-overview-arm/)
 
+[Virtual Networks - Overview](https://azure.microsoft.com/en-us/documentation/articles/virtual-networks-overview/)
+
 [Virtual Machines](https://azure.microsoft.com/en-us/services/virtual-machines/)
 
 [Virtual Machines - Learning Path](https://azure.microsoft.com/en-us/documentation/learning-paths/virtual-machines/)
