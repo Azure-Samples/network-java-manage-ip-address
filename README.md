@@ -1,5 +1,5 @@
 ---
-services: network
+services: networking
 platforms: java
 author: anuchandy
 ---
