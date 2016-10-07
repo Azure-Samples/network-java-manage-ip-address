@@ -1,13 +1,14 @@
 ---
-services: Network
+services: networking
 platforms: java
-author: selvasingh
+author: anuchandy
 ---
 
 #Getting Started with Network - Manage IP Address - in Java #
 
 
-  Azure Network sample for managing IP address -
+Network: Manage IP Address Sample (for 1.0.0-beta2) - demonstrates how to perform common tasks using the Microsoft Azure Network service.
+
    - Assign a public IP address for a virtual machine during its creation
    - Assign a public IP address for a virtual machine through an virtual machine update action
    - Get the associated public IP address for a virtual machine
@@ -30,6 +31,14 @@ Set the environment variable `AZURE_AUTH_LOCATION` with the full path for an aut
 ## More information ##
 
 [http://azure.com/java] (http://azure.com/java)
+
+[Public IP Address - Overview](https://azure.microsoft.com/en-us/documentation/articles/virtual-network-ip-addresses-overview-arm/)
+
+[Virtual Networks - Overview](https://azure.microsoft.com/en-us/documentation/articles/virtual-networks-overview/)
+
+[Virtual Machines](https://azure.microsoft.com/en-us/services/virtual-machines/)
+
+[Virtual Machines - Learning Path](https://azure.microsoft.com/en-us/documentation/learning-paths/virtual-machines/)
 
 If you don't have a Microsoft Azure subscription you can get a FREE trial account [here](http://go.microsoft.com/fwlink/?LinkId=330212)
 
