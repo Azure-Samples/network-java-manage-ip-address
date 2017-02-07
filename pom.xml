@@ -3,24 +3,30 @@
     <groupId>com.microsoft.azure</groupId>
     <artifactId>network-java-manage-ip-address</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>ManageIPAddress</name>
+    <name>ManageIPAddress.java</name>
     <description></description>
     <url>https://github.com/Azure/network-java-manage-ip-address</url>
     <dependencies>
         <dependency>
             <groupId>com.microsoft.azure</groupId>
             <artifactId>azure</artifactId>
-            <version>1.0.0-beta4.1</version>
+            <version>1.0.0-beta5</version>
         </dependency>
     </dependencies>
     <build>
+        <sourceDirectory>src</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.4.0</version>
                 <configuration>
-                    <mainClass>com.microsoft.azure.management.network.samples.ManageIPAddress</mainClass>
+                    <mainClass>com.microsoft.azure.management.network.samples.ManageIPAddress.java</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -48,7 +54,7 @@
                             </descriptorRefs>
                             <archive>
                                 <manifest>
-                                    <mainClass>com.microsoft.azure.management.network.samples.ManageIPAddress</mainClass>
+                                    <mainClass>com.microsoft.azure.management.network.samples.ManageIPAddress.java</mainClass>
                                 </manifest>
                             </archive>
                         </configuration>
