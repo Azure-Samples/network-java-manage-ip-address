@@ -4,9 +4,8 @@ languages:
 - java
 products:
 - azure
-extensions:
-- services: virtual-network
-- platforms: java
+description: "Getting Started with Network - Manage IP Address - in Java"
+urlFragment: network-java-manage-ip-address
 ---
 
 # Getting Started with Network - Manage IP Address - in Java #
