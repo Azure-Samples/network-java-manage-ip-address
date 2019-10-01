@@ -8,7 +8,7 @@ description: "Getting Started with Network - Manage IP Address - in Java"
 urlFragment: network-java-manage-ip-address
 ---
 
-# Getting Started with Network - Manage IP Address - in Java #
+# Manage IP Address in Azure Network (Java)
 
 
   Azure Network sample for managing IP address -
