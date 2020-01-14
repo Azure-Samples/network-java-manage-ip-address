@@ -4,11 +4,12 @@ languages:
 - java
 products:
 - azure
-description: "Getting Started with Network - Manage IP Address - in Java"
-urlFragment: network-java-manage-ip-address
+extensions:
+- services: virtual-network
+- platforms: java
 ---
 
-# Manage IP Address in Azure Network (Java)
+# Getting Started with Network - Manage IP Address - in Java #
 
 
   Azure Network sample for managing IP address -
@@ -25,13 +26,11 @@ To run this sample:
 
 Set the environment variable `AZURE_AUTH_LOCATION` with the full path for an auth file. See [how to create an auth file](https://github.com/Azure/azure-libraries-for-java/blob/master/AUTH.md).
 
-```bash
-git clone https://github.com/Azure-Samples/network-java-manage-ip-address.git
+    git clone https://github.com/Azure-Samples/network-java-manage-ip-address.git
 
-cd network-java-manage-ip-address
+    cd network-java-manage-ip-address
 
-mvn clean compile exec:java
-```
+    mvn clean compile exec:java
 
 ## More information ##
 
