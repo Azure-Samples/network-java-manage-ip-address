@@ -5,7 +5,7 @@ languages:
 products:
 - azure
 extensions:
-  services: virtual-network
+  services: Network
   platforms: java
 ---
 
@@ -13,18 +13,18 @@ extensions:
 
 
   Azure Network sample for managing IP address -
-   - Assign a public IP address for a virtual machine during its creation
-   - Assign a public IP address for a virtual machine through an virtual machine update action
-   - Get the associated public IP address for a virtual machine
-   - Get the assigned public IP address for a virtual machine
-   - Remove a public IP address from a virtual machine.
+  - Assign a public IP address for a virtual machine during its creation
+  - Assign a public IP address for a virtual machine through an virtual machine update action
+  - Get the associated public IP address for a virtual machine
+  - Get the assigned public IP address for a virtual machine
+  - Remove a public IP address from a virtual machine.
  
 
 ## Running this Sample ##
 
 To run this sample:
 
-Set the environment variable `AZURE_AUTH_LOCATION` with the full path for an auth file. See [how to create an auth file](https://github.com/Azure/azure-libraries-for-java/blob/master/AUTH.md).
+See [DefaultAzureCredential](https://github.com/Azure/azure-sdk-for-java/tree/master/sdk/identity/azure-identity#defaultazurecredential) and prepare the authentication works best for you. For more details on authentication, please refer to [AUTH.md](https://github.com/Azure/azure-sdk-for-java/blob/master/sdk/resourcemanager/docs/AUTH.md).
 
     git clone https://github.com/Azure-Samples/network-java-manage-ip-address.git
 
@@ -34,9 +34,11 @@ Set the environment variable `AZURE_AUTH_LOCATION` with the full path for an aut
 
 ## More information ##
 
-[http://azure.com/java](http://azure.com/java)
+For general documentation as well as quickstarts on how to use Azure Management Libraries for Java, please see [here](https://aka.ms/azsdk/java/mgmt).
 
-If you don't have a Microsoft Azure subscription you can get a FREE trial account [here](http://go.microsoft.com/fwlink/?LinkId=330212)
+Start to develop applications with Java on Azure [here](http://azure.com/java).
+
+If you don't have a Microsoft Azure subscription you can get a FREE trial account [here](http://go.microsoft.com/fwlink/?LinkId=330212).
 
 ---
 

@@ -1,50 +1,49 @@
-/**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License. See License.txt in the project root for
- * license information.
- */
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
-package com.microsoft.azure.management.network.samples;
+package com.azure.resourcemanager.network.samples;
 
-import com.microsoft.azure.management.Azure;
-import com.microsoft.azure.management.compute.KnownWindowsVirtualMachineImage;
-import com.microsoft.azure.management.compute.VirtualMachine;
-import com.microsoft.azure.management.compute.VirtualMachineSizeTypes;
-import com.microsoft.azure.management.network.NetworkInterface;
-import com.microsoft.azure.management.network.PublicIPAddress;
-import com.microsoft.azure.management.resources.fluentcore.arm.Region;
-import com.microsoft.azure.management.resources.fluentcore.utils.SdkContext;
-import com.microsoft.azure.management.samples.Utils;
-import com.microsoft.rest.LogLevel;
+import com.azure.core.credential.TokenCredential;
+import com.azure.core.http.policy.HttpLogDetailLevel;
+import com.azure.core.management.AzureEnvironment;
+import com.azure.identity.DefaultAzureCredentialBuilder;
+import com.azure.resourcemanager.AzureResourceManager;
+import com.azure.resourcemanager.compute.models.KnownWindowsVirtualMachineImage;
+import com.azure.resourcemanager.compute.models.VirtualMachine;
+import com.azure.resourcemanager.compute.models.VirtualMachineSizeTypes;
+import com.azure.resourcemanager.network.models.NetworkInterface;
+import com.azure.resourcemanager.network.models.PublicIpAddress;
+import com.azure.core.management.Region;
+import com.azure.core.management.profile.AzureProfile;
+import com.azure.resourcemanager.samples.Utils;
 
-import java.io.File;
 import java.util.Date;
 
 /**
  * Azure Network sample for managing IP address -
- *  - Assign a public IP address for a virtual machine during its creation
- *  - Assign a public IP address for a virtual machine through an virtual machine update action
- *  - Get the associated public IP address for a virtual machine
- *  - Get the assigned public IP address for a virtual machine
- *  - Remove a public IP address from a virtual machine.
+ * - Assign a public IP address for a virtual machine during its creation
+ * - Assign a public IP address for a virtual machine through an virtual machine update action
+ * - Get the associated public IP address for a virtual machine
+ * - Get the assigned public IP address for a virtual machine
+ * - Remove a public IP address from a virtual machine.
  */
 public final class ManageIPAddress {
 
     /**
      * Main function which runs the actual sample.
-     * @param azure instance of the azure client
+     *
+     * @param azureResourceManager instance of the azure client
      * @return true if sample runs successfully
      */
-    public static boolean runSample(Azure azure) {
-        final String publicIPAddressName1 = SdkContext.randomResourceName("pip1", 20);
-        final String publicIPAddressName2 = SdkContext.randomResourceName("pip2", 20);
-        final String publicIPAddressLeafDNS1 = SdkContext.randomResourceName("pip1", 20);
-        final String publicIPAddressLeafDNS2 = SdkContext.randomResourceName("pip2", 20);
-        final String vmName = SdkContext.randomResourceName("vm", 8);
-        final String rgName = SdkContext.randomResourceName("rgNEMP", 24);
+    public static boolean runSample(AzureResourceManager azureResourceManager) {
+        final String publicIPAddressName1 = Utils.randomResourceName(azureResourceManager, "pip1", 20);
+        final String publicIPAddressName2 = Utils.randomResourceName(azureResourceManager, "pip2", 20);
+        final String publicIPAddressLeafDNS1 = Utils.randomResourceName(azureResourceManager, "pip1", 20);
+        final String publicIPAddressLeafDNS2 = Utils.randomResourceName(azureResourceManager, "pip2", 20);
+        final String vmName = Utils.randomResourceName(azureResourceManager, "vm", 8);
+        final String rgName = Utils.randomResourceName(azureResourceManager, "rgNEMP", 24);
         final String userName = "tirekicker";
-        // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="Serves as an example, not for deployment. Please change when using this in your code.")]
-        final String password = "12NewPA$$w0rd!";
+        final String password = Utils.password();
 
         try {
 
@@ -55,7 +54,7 @@ public final class ManageIPAddress {
 
             System.out.println("Creating a public IP address...");
 
-            PublicIPAddress publicIPAddress = azure.publicIPAddresses().define(publicIPAddressName1)
+            PublicIpAddress publicIPAddress = azureResourceManager.publicIpAddresses().define(publicIPAddressName1)
                     .withRegion(Region.US_EAST)
                     .withNewResourceGroup(rgName)
                     .withLeafDomainLabel(publicIPAddressLeafDNS1)
@@ -72,7 +71,7 @@ public final class ManageIPAddress {
 
             Date t1 = new Date();
 
-            VirtualMachine vm = azure.virtualMachines().define(vmName)
+            VirtualMachine vm = azureResourceManager.virtualMachines().define(vmName)
                     .withRegion(Region.US_EAST)
                     .withExistingResourceGroup(rgName)
                     .withNewPrimaryNetwork("10.0.0.0/28")
@@ -104,7 +103,7 @@ public final class ManageIPAddress {
 
             // Define a new public IP address
 
-            PublicIPAddress publicIPAddress2 = azure.publicIPAddresses().define(publicIPAddressName2)
+            PublicIpAddress publicIpAddress2 = azureResourceManager.publicIpAddresses().define(publicIPAddressName2)
                     .withRegion(Region.US_EAST)
                     .withNewResourceGroup(rgName)
                     .withLeafDomainLabel(publicIPAddressLeafDNS2)
@@ -116,8 +115,8 @@ public final class ManageIPAddress {
 
             NetworkInterface primaryNetworkInterface = vm.getPrimaryNetworkInterface();
             primaryNetworkInterface.update()
-                .withExistingPrimaryPublicIPAddress(publicIPAddress2)
-                .apply();
+                    .withExistingPrimaryPublicIPAddress(publicIpAddress2)
+                    .apply();
 
 
             //============================================================
@@ -135,10 +134,10 @@ public final class ManageIPAddress {
             System.out.println("Removing public IP address associated with the VM");
             vm.refresh();
             primaryNetworkInterface = vm.getPrimaryNetworkInterface();
-            publicIPAddress = primaryNetworkInterface.primaryIPConfiguration().getPublicIPAddress();
+            publicIPAddress = primaryNetworkInterface.primaryIPConfiguration().getPublicIpAddress();
             primaryNetworkInterface.update()
-                .withoutPrimaryPublicIPAddress()
-                .apply();
+                    .withoutPrimaryPublicIPAddress()
+                    .apply();
 
             System.out.println("Removed public IP address associated with the VM");
 
@@ -146,15 +145,13 @@ public final class ManageIPAddress {
             //============================================================
             // Delete the public ip
             System.out.println("Deleting the public IP address");
-            azure.publicIPAddresses().deleteById(publicIPAddress.id());
+            azureResourceManager.publicIpAddresses().deleteById(publicIPAddress.id());
             System.out.println("Deleted the public IP address");
             return true;
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
         } finally {
             try {
                 System.out.println("Deleting Resource Group: " + rgName);
-                azure.resourceGroups().deleteByName(rgName);
+                azureResourceManager.resourceGroups().beginDeleteByName(rgName);
                 System.out.println("Deleted Resource Group: " + rgName);
             } catch (NullPointerException npe) {
                 System.out.println("Did not create any resources in Azure. No clean up is necessary");
@@ -162,10 +159,11 @@ public final class ManageIPAddress {
                 g.printStackTrace();
             }
         }
-        return false;
     }
+
     /**
      * Main entry point.
+     *
      * @param args the parameters
      */
     public static void main(String[] args) {
@@ -176,17 +174,21 @@ public final class ManageIPAddress {
             //=============================================================
             // Authenticate
 
-            final File credFile = new File(System.getenv("AZURE_AUTH_LOCATION"));
+            final AzureProfile profile = new AzureProfile(AzureEnvironment.AZURE);
+            final TokenCredential credential = new DefaultAzureCredentialBuilder()
+                .authorityHost(profile.getEnvironment().getActiveDirectoryEndpoint())
+                .build();
 
-            Azure azure = Azure.configure()
-                    .withLogLevel(LogLevel.BASIC)
-                    .authenticate(credFile)
-                    .withDefaultSubscription();
+            AzureResourceManager azureResourceManager = AzureResourceManager
+                .configure()
+                .withLogLevel(HttpLogDetailLevel.BASIC)
+                .authenticate(credential, profile)
+                .withDefaultSubscription();
 
             // Print selected subscription
-            System.out.println("Selected subscription: " + azure.subscriptionId());
+            System.out.println("Selected subscription: " + azureResourceManager.subscriptionId());
 
-            runSample(azure);
+            runSample(azureResourceManager);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
